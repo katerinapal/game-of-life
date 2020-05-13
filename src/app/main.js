@@ -8,7 +8,7 @@ require.config({
   paths: {}
 });
 
-define(['./app/game.js'], function (Game) {
+define(['./game.js'], function (Game) {
   var game = new Game();
   game.init();
 });
