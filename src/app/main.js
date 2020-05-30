@@ -1,3 +1,4 @@
+import { Game } from ".\\game.js";
 /*
  * Game of Life implementation using vanilla JavaScript
  * Copyright (C) Artem Devlysh, 2015
@@ -8,7 +9,5 @@ require.config({
   paths: {}
 });
 
-define(['./game.js'], function (Game) {
-  var game = new Game();
-  game.init();
-});
+var game = new Game();
+game.init();
