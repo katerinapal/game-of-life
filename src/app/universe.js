@@ -1,63 +1,63 @@
-/*
- * Game of Life implementation using vanilla JavaScript
- * Copyright (C) Artem Devlysh, 2015
+import {
+ UNIVERSE_WIDTH as constantsconfigjs_UNIVERSE_WIDTH,
+ UNIVERSE_HEIGHT as constantsconfigjs_UNIVERSE_HEIGHT,
+} from ".\\constants\\config.js";
+
+import { Cell } from ".\\cell.js";
+'use strict';
+
+/**
+ * @class Universe
+ * @constructor
  */
+function Universe() {
+    this.width = constantsconfigjs_UNIVERSE_WIDTH;
+    this.height = constantsconfigjs_UNIVERSE_HEIGHT;
+    this.space = _createSpace(this.width, this.height);
+}
 
-define(['./constants/config.js', './cell.js'], function (config, Cell) {
-    'use strict';
+/**
+ * Universe width
+ *
+ * @property width
+ * @type {Number}
+ */
+Universe.prototype.width = null;
 
-    /**
-     * @class Universe
-     * @constructor
-     */
-    function Universe() {
-        this.width = config.UNIVERSE_WIDTH;
-        this.height = config.UNIVERSE_HEIGHT;
-        this.space = _createSpace(this.width, this.height);
-    }
+/**
+ * Universe height
+ *
+ * @property height
+ * @type {Number}
+ */
+Universe.prototype.height = null;
 
-    /**
-     * Universe width
-     *
-     * @property width
-     * @type {Number}
-     */
-    Universe.prototype.width = null;
+/**
+ * Space is 2d array with cells
+ *
+ * @property space
+ * @type {Array}
+ */
+Universe.prototype.space = null;
 
-    /**
-     * Universe height
-     *
-     * @property height
-     * @type {Number}
-     */
-    Universe.prototype.height = null;
-
-    /**
-     * Space is 2d array with cells
-     *
-     * @property space
-     * @type {Array}
-     */
-    Universe.prototype.space = null;
-
-    /**
-     * Creates new space
-     *
-     * @method _createSpace
-     * @private
-     * @return {Array} New 2d array for cells
-     */
-    function _createSpace(width, height) {
-        var x, y,
-            space = [];
-        for (x = 0; x < width; x++) {
-            space[x] = [];
-            for (y = 0; y < height; y++) {
-                space[x][y] = new Cell(x, y);
-            }
+/**
+ * Creates new space
+ *
+ * @method _createSpace
+ * @private
+ * @return {Array} New 2d array for cells
+ */
+function _createSpace(width, height) {
+    var x, y,
+        space = [];
+    for (x = 0; x < width; x++) {
+        space[x] = [];
+        for (y = 0; y < height; y++) {
+            space[x][y] = new Cell(x, y);
         }
-        return space;
     }
+    return space;
+}
 
-    return Universe;
-});
+var exported_Universe = Universe;
+export { exported_Universe as Universe };

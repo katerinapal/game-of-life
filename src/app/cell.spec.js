@@ -1,63 +1,65 @@
-define(['./cell.js'], function (Cell) {
+import {
+  ALIVE_COLOR as constantsconfigjs_ALIVE_COLOR,
+  DEAD_COLOR as constantsconfigjs_DEAD_COLOR,
+} from ".\\constants\\config.js";
 
-  describe('Cell', function () {
-    var cell, x, y;
-    x = 5;
-    y = 6;
+import { Cell } from ".\\cell.js";
 
-    beforeEach(function () {
-      cell = new Cell(x, y);
+describe('Cell', function () {
+  var cell, x, y;
+  x = 5;
+  y = 6;
+
+  beforeEach(function () {
+    cell = new Cell(x, y);
+  });
+
+  it('should have "x", "y", "neightborCoordinates" methods', function () {
+    expect(cell.x).toBeDefined();
+    expect(cell.y).toBeDefined();
+    expect(cell.x).toBe(x);
+    expect(cell.y).toBe(y);
+    expect(cell.neighborsCoordinates).toBeDefined();
+    expect(cell.neighborsCoordinates).toEqual(jasmine.any(Array));
+  });
+
+  describe('.revive method', function () {
+    it('should revive cell', function () {
+      cell.isAlive = false;
+      cell.revive();
+      expect(cell.isAlive).toBeTruthy();
     });
+  });
 
-    it('should have "x", "y", "neightborCoordinates" methods', function () {
-      expect(cell.x).toBeDefined();
-      expect(cell.y).toBeDefined();
-      expect(cell.x).toBe(x);
-      expect(cell.y).toBe(y);
-      expect(cell.neighborsCoordinates).toBeDefined();
-      expect(cell.neighborsCoordinates).toEqual(jasmine.any(Array));
+  describe('.kill method', function () {
+    it('should kill cell', function () {
+      cell.isAlive = true;
+      cell.kill();
+      expect(cell.isAlive).toBeFalsy();
     });
+  });
 
-    describe('.revive method', function () {
-      it('should revive cell', function () {
-        cell.isAlive = false;
-        cell.revive();
-        expect(cell.isAlive).toBeTruthy();
-      });
+  describe('.calculateColor method', function () {
+    it('calculates color of cell', function () {
+      cell.revive();
+      expect(cell.color).toBe(constantsconfigjs_ALIVE_COLOR);
+      cell.kill();
+      expect(cell.color).toBe(constantsconfigjs_DEAD_COLOR);
     });
+  });
 
-    describe('.kill method', function () {
-      it('should kill cell', function () {
-        cell.isAlive = true;
-        cell.kill();
-        expect(cell.isAlive).toBeFalsy();
-      });
-    });
-
-    describe('.calculateColor method', function () {
-      it('calculates color of cell', function () {
-        define(['./constants/config.js'], function (config) {
-          cell.revive();
-          expect(cell.color).toBe(config.ALIVE_COLOR);
-          cell.kill();
-          expect(cell.color).toBe(config.DEAD_COLOR);
-        });
-      });
-    });
-
-    describe('._detectNeighborsCoordinates method', function () {
-      it('should detect neighbors coordinates of current cell', function () {
-        var result;
-        result = cell._detectNeighborsCoordinates();
-        expect(result).toContain({x: 4, y: 5});
-        expect(result).toContain({x: 5, y: 5});
-        expect(result).toContain({x: 6, y: 5});
-        expect(result).toContain({x: 4, y: 6});
-        expect(result).toContain({x: 6, y: 6});
-        expect(result).toContain({x: 4, y: 7});
-        expect(result).toContain({x: 5, y: 7});
-        expect(result).toContain({x: 6, y: 7});
-      });
+  describe('._detectNeighborsCoordinates method', function () {
+    it('should detect neighbors coordinates of current cell', function () {
+      var result;
+      result = cell._detectNeighborsCoordinates();
+      expect(result).toContain({x: 4, y: 5});
+      expect(result).toContain({x: 5, y: 5});
+      expect(result).toContain({x: 6, y: 5});
+      expect(result).toContain({x: 4, y: 6});
+      expect(result).toContain({x: 6, y: 6});
+      expect(result).toContain({x: 4, y: 7});
+      expect(result).toContain({x: 5, y: 7});
+      expect(result).toContain({x: 6, y: 7});
     });
   });
 });
